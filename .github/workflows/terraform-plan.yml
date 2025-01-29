@@ -6,7 +6,7 @@ on:
 env:
   TF_CLOUD_ORGANIZATION: "kpbdealwis93"
   TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
-  TF_WORKSPACE: "edureka-DevOps-Postgraduate"
+  TF_WORKSPACE: "edureka-pdp-workspace"
   CONFIG_DIRECTORY: "./"
 
 jobs:

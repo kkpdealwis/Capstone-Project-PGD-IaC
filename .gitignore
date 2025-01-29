@@ -7,3 +7,4 @@ jenkins-server-key
 k8s-master-node-key.pem
 k8s-worker-node-key.pem
 jenkins-server-key.pem
+variables.tfvars

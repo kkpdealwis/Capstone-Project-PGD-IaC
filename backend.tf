@@ -1,5 +1,5 @@
 terraform { 
-  backend "remote" {
+  cloud {
     organization = "kkpdealwis93"
     workspaces {
       name = "edureka-pdp-workspace"

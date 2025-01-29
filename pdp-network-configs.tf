@@ -7,7 +7,7 @@ resource "aws_vpc" "EDUREKA-PDP-VPC" {
     Name                                 = "EDUREKA-PDP-VPC"
     User                                 = "Terraform-User"
     Duration                             = "1day"
-    "kubernetes.io/cluster/kubernetes"     = "owned"
+    "kubernetes.io/cluster/kubernetes"   = "owned"
   }
 }
 
@@ -20,7 +20,7 @@ resource "aws_subnet" "EDUREKA-PDP-SUBNET-PUBLIC" {
     Name                                 = "EDUREKA-PDP-SUBNET-PUBLIC"
     User                                 = "Terraform"
     Duration                             = "1day"
-    "kubernetes.io/cluster/kubernetes"     = "owned"
+    "kubernetes.io/cluster/kubernetes"   = "owned"
   }
 }
 
@@ -77,7 +77,7 @@ resource "aws_route_table" "EDUREKA-PDP-ROUTE-TABLE-PUBLIC" {
     Name                                 = "EDUREKA-PDP-ROUTE-TABLE-PUBLIC"
     User                                 = "Terraform-User"
     Duration                             = "1day"
-    "kubernetes.io/cluster/kubernetes"     = "owned"
+    "kubernetes.io/cluster/kubernetes"   = "owned"
   }
 }
 
@@ -117,39 +117,3 @@ resource "aws_route_table_association" "EDUREKA-PDP-ROUTE-TABLE-PRIVATE-ASSOCIAT
   route_table_id = aws_route_table.EDUREKA-PDP-ROUTE-TABLE-PRIVATE.id
 }
 */
-
-//create IAM role with attaching AmazonSSMManagedInstanceCore AWS managed policy
-data "aws_iam_policy" "ec2-ssm-policy" {
-  name = "AmazonSSMManagedInstanceCore"
-}
-resource "aws_iam_role" "ec2-ssm-role" {
-  name = "ec2-ssm-role"
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Sid    = "EC2SSMRole"
-        Principal = {
-          Service = "ec2.amazonaws.com"
-        }
-      }
-    ]
-  })
-  tags = {
-    Name       = "Dev-SSM-Role"
-    Department = "DevOps"
-    Email      = "kkpdealwis@gmail.com"
-  }
-}
-
-resource "aws_iam_role_policy_attachment" "ec2-ssm-role-policy-attachment" {
-  role       = aws_iam_role.ec2-ssm-role.name
-  policy_arn = data.aws_iam_policy.ec2-ssm-policy.arn
-}
-
-resource "aws_iam_instance_profile" "ec2-ssm-instance-profile" {
-  name = "ec2-ssm-instance-profile"
-  role = aws_iam_role.ec2-ssm-role.name
-}

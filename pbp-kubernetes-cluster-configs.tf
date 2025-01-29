@@ -112,7 +112,7 @@ resource "aws_security_group" "k8s-master-node-sg" {
   }
   tags = {
     Name                                 = "k8s-master-node-sg"
-    "kubernetes.io/cluster/kubernetes"     = "owned"
+    "kubernetes.io/cluster/kubernetes"   = "owned"
   }
 }
 
@@ -148,7 +148,7 @@ resource "aws_instance" "K8S-MASTER-NODE-INSTANCE" {
     Name                                 = "K8S-MASTER-NODE-INSTANCE"
     User                                 = "Terraform-User"
     Duration                             = "1day"
-    "kubernetes.io/cluster/kubernetes"     = "owned"
+    "kubernetes.io/cluster/kubernetes"   = "owned"
   }
 
 }
@@ -213,13 +213,13 @@ resource "aws_instance" "K8S-WORKER-NODE-INSTANCE" {
     Name                                 = "K8S-WORKER-NODE-INSTANCE"
     User                                 = "Terraform-User"
     Duration                             = "1day"
-    "kubernetes.io/cluster/kubernetes"     = "owned"
+    "kubernetes.io/cluster/kubernetes"   = "owned"
   }
   tags = {
     Name                                 = "K8S-WORKER-NODE-INSTANCE"
     User                                 = "Terraform-User"
     Duration                             = "1day"
-    "kubernetes.io/cluster/kubernetes"     = "owned"
+    "kubernetes.io/cluster/kubernetes"   = "owned"
   }
 
 }

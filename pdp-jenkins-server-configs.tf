@@ -2,6 +2,11 @@
 data "aws_iam_policy" "ec2-ssm-policy" {
   name = "AmazonSSMManagedInstanceCore"
 }
+resource "aws_iam_policy" "ansible-inventory-policy" {
+  name        = "AnsibleInventoryPolicy"
+  description = "Ansible Inventory IAM Policy"
+  policy      = file("ansible-inventory-iam-policy.json")
+}
 resource "aws_iam_role" "ec2-ssm-role" {
   name = "ec2-ssm-role"
   assume_role_policy = jsonencode({
@@ -23,10 +28,16 @@ resource "aws_iam_role" "ec2-ssm-role" {
     Email      = "kkpdealwis@gmail.com"
   }
 }
-
+locals {
+  jeniks_server_policy_arns = {
+    AmazonSSMManagedInstanceCore = data.aws_iam_policy.ec2-ssm-policy.arn
+    AnsibleInventoryPolicy       = aws_iam_policy.ansible-inventory-policy.arn
+  }
+}
 resource "aws_iam_role_policy_attachment" "ec2-ssm-role-policy-attachment" {
-  role       = aws_iam_role.ec2-ssm-role.name
-  policy_arn = data.aws_iam_policy.ec2-ssm-policy.arn
+  for_each = local.jeniks_server_policy_arns
+  role     = aws_iam_role.ec2-ssm-role.name
+  policy_arn = each.value
 }
 
 resource "aws_iam_instance_profile" "ec2-ssm-instance-profile" {

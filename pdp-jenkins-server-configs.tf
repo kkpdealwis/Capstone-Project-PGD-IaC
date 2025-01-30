@@ -5,7 +5,7 @@ data "aws_iam_policy" "ec2-ssm-policy" {
 resource "aws_iam_policy" "ansible-inventory-policy" {
   name        = "AnsibleInventoryPolicy"
   description = "Ansible Inventory IAM Policy"
-  policy      = file("ansible-inventory-iam-policy.json")
+  policy      = file("ansible-dynamic-inventory-policy.json")
 }
 resource "aws_iam_role" "ec2-ssm-role" {
   name = "ec2-ssm-role"

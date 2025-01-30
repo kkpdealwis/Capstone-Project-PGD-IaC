@@ -129,12 +129,12 @@ resource "aws_key_pair" "k8s-worker-node-key" {
 resource "aws_instance" "K8S-MASTER-NODE-INSTANCE" {
   ami                         = "ami-0e2c8caa4b6378d8c"
   instance_type               = "t2.medium"
-  key_name                    = "k8s-worker-node-key"
+  key_name                    = "k8s-master-node-key"
   vpc_security_group_ids      = [aws_security_group.k8s-master-node-sg.id]
   subnet_id                   = aws_subnet.EDUREKA-PDP-SUBNET-PUBLIC.id
   iam_instance_profile        = aws_iam_instance_profile.ec2-ssm-instance-profile-k8s-master.name
   associate_public_ip_address = true
-  user_data                   = file("configure-worker-k8s-server.sh")
+  user_data                   = file("configure-master-k8s-server.sh")
   root_block_device {
     volume_type = "gp3"
     volume_size = 30
